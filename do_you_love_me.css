@@ -1,40 +1,321 @@
 /**Tiktok meowish**/
 
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300..700&display=swap');
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
+
 body {
-  display: grid;
+  display: flex; /* Use flexbox for centering */
   justify-content: center;
   align-items: center;
-  background-color: #ffe6e9;
-  font-family: "Quicksand", sans-serif;
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  background: linear-gradient(135deg, #ffe6e9, #ffc7d1); /* Lovely gradient */
+  font-family: 'Quicksand', sans-serif;
+  overflow: hidden; /* Prevent scrollbars from button movement */
 }
+
 .container {
-  position: absolute;
+  position: absolute; /* Keep absolute for precise positioning relative to body */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-100%, -50%);
-  transition: 0.2s;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Smooth transitions */
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent background */
+  border-radius: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  text-align: center; /* Center text within containers */
 }
 
 .question-container {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transition: 0.2s;
+  position: relative; /* Change to relative to contain buttons */
+  width: 90%; /* Adjust width for better responsiveness */
+  max-width: 500px; /* Max width for larger screens */
+  min-height: 300px; /* Give some space for button movement */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .tenor-gif-embed {
-  height: 15rem;
+  height: 12rem; /* Slightly smaller for balance */
+  width: 100%;
+  max-width: 300px; /* Control gif size */
   pointer-events: none;
-  border-radius: 10px;
-  margin-bottom: 3rem;
+  border-radius: 15px; /* More rounded corners */
+  margin-bottom: 2rem; /* Adjusted margin */
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15); /* Shadow for gif */
+}
+
+.question {
+  font-family: 'Pacifico', cursive; /* More lovely font for question */
+  font-size: 3.8rem; /* Slightly larger */
+  color: #ff4d6d; /* Deeper pink */
+  margin-bottom: 2rem; /* More space */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  animation: pulse 2s infinite alternate; /* Gentle pulsing animation */
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Increased gap */
+  width: 100%; /* Ensure button container spans full width */
+}
+
+.btn {
+  position: relative; /* Buttons are relative to button-container for initial placement */
+  border: none;
+  border-radius: 50px;
+  padding: 12px 25px; /* More padding */
+  font-family: "Quicksand", sans-serif;
+  font-size: 20px; /* Larger font */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #ff6b81;
+  color: white;
+  transform: scale(1); /* Reset initial scale */
+  box-shadow: 0px 6px 20px rgba(255, 107, 129, 0.4); /* Softer, wider shadow */
+}
+
+.btn:hover {
+  background-color: #ff8fa3; /* Lighter pink on hover */
+  transform: scale(1.1);
+  box-shadow: 0px 8px 25px rgba(255, 107, 129, 0.6);
+  text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.7); /* Subtle white text shadow */
+}
+
+.btn:active {
+  transform: scale(0.95); /* Shrink slightly on click */
+  box-shadow: 0px 3px 10px rgba(255, 107, 129, 0.5); /* Smaller shadow on active */
+}
+
+.yes-btn {
+  /* Position within button-container */
+  left: auto;
+  right: auto;
+}
+.no-btn {
+  /* Position within button-container */
+  left: auto;
+  right: auto;
+  position: absolute; /* Re-enable absolute for random movement */
+  transition: all 0.1s ease; /* Faster transition for erratic movement */
+}
+
+.result-container {
+  display: none;
+  /* Already has the container styling */
+}
+
+.gif-result {
+  border-radius: 15px; /* Consistent rounding */
+  margin-bottom: 2.5rem; /* More space */
+  width: 100%;
+  max-width: 350px; /* Control result gif size */
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.result-container h2 {
+  font-family: 'Pacifico', cursive; /* Consistent lovely font */
+  font-size: 3.5rem;
+  color: #ff4d6d;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  animation: fadeInDown 1s ease-out; /* Animation for result text */
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -70%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* heart loader */
+.cssload-main {
+  display: none;
+  position: absolute;
+  top: 50%; /* Center the loader */
+  left: 50%;
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 100; /* Ensure it's on top */
+}
+
+.cssload-main * {
+  font-size: 70px; /* Slightly larger hearts */
+}
+
+.cssload-heart {
+  animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.cssload-heartL,
+.cssload-heartR,
+.cssload-square {
+  border: 1px solid #ff0000;
+  background-color: #ff0000;
+  content: "";
+  position: absolute;
+  display: block;
+  border-radius: 100%;
+}
+
+.cssload-heartL {
+  width: 1em;
+  height: 1em;
+  animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+  transform: translate(-0.4em, -0.4em); /* Adjusted relative to new font-size */
+}
+
+.cssload-heartR {
+  width: 1em;
+  height: 1em;
+  transform: translate(0.4em, -0.4em); /* Adjusted relative to new font-size */
+  animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+}
+
+.cssload-square {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  transform: scale(1) rotate(-45deg);
+  animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+}
+
+.cssload-shadow {
+  position: absolute; /* Changed to absolute for proper centering within main */
+  bottom: -0.8em; /* Adjusted position */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 1.2em; /* Wider shadow */
+  height: 0.3em; /* Thicker shadow */
+  background-color: rgb(215, 215, 215);
+  border: 1px solid rgb(215, 215, 215);
+  border-radius: 50%;
+  animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+  .question {
+    font-size: 2.8rem;
+  }
+  .btn {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+  .result-container h2 {
+    font-size: 2.5rem;
+  }
+  .question-container {
+    width: 95%;
+    padding: 1rem;
+  }
+  .tenor-gif-embed {
+    height: 10rem;
+    margin-bottom: 1.5rem;
+  }
+  .gif-result {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 400px) {
+  .question {
+    font-size: 2.2rem;
+  }
+  .btn {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+  .result-container h2 {
+    font-size: 2rem;
+  }
+  .button-container {
+    flex-direction: column; /* Stack buttons on very small screens */
+    gap: 1rem;
+    align-items: center;
+  }
+  .no-btn {
+    position: relative; /* Keep it relative if stacked */
+    top: auto;
+    left: auto;
+    transform: none;
+  }
+  .cssload-main * {
+    font-size: 50px; /* Smaller hearts for mobile */
+  }
+}
+
+
+/* Keyframes (kept mostly the same, ensuring vendor prefixes are covered if needed, though modern browsers usually handle them) */
+@keyframes cssload-square {
+  50% {
+    border-radius: 100%;
+    transform: scale(0.5) rotate(-45deg);
+  }
+  100% {
+    transform: scale(1) rotate(-45deg);
+  }
+}
+
+@keyframes cssload-heart {
+  50% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes cssload-heartL {
+  60% {
+    transform: translate(-0.4em, -0.4em) scale(0.4);
+  }
+  100% {
+    transform: translate(-0.4em, -0.4em) scale(1);
+  }
+}
+
+@keyframes cssload-heartR {
+  40% {
+    transform: translate(0.4em, -0.4em) scale(0.4);
+  }
+  100% {
+    transform: translate(0.4em, -0.4em) scale(1);
+  }
+}
+
+@keyframes cssload-shadow {
+  50% {
+    transform: translateX(-50%) scale(0.5);
+    background-color: rgb(228, 228, 228);
+    border-color: rgb(228, 228, 228);
+  }
+}  margin-bottom: 3rem;
 }
 .question {
   font-size: 3.5rem;
@@ -415,3 +696,4 @@ body {
     border-color: rgb(228, 228, 228);
   }
 }
+
